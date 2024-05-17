@@ -1,10 +1,20 @@
 const express = require("express");
 const WebSocket = require("ws");
 const http = require("http");
+const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
+
+// CORS 설정
+app.use(
+  cors({
+    origin: "*", // 모든 도메인에서 접근 허용
+    methods: ["GET", "POST"], // 허용할 HTTP 메서드
+    allowedHeaders: ["Content-Type"], // 허용할 HTTP 헤더
+  })
+);
 
 wss.on("connection", function connection(ws) {
   console.log("Client has Connected");
